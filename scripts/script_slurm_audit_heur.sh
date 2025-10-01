@@ -3,7 +3,7 @@
 echo "Starting the script..."
 
 # File containing the list of string arguments
-TEXT_FILE="/NL/token-pricing/work/data/LMSYS.txt"
+TEXT_FILE="data/LMSYS.txt"
 
 # Number of lines per job (adjustable)
 LINES_PER_JOB=300
@@ -18,7 +18,7 @@ TEMPERATURES=( 1.0 1.15 1.3)
 PS=( 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 )
 
 # Activate the virtual environment once for efficiency
-source /NL/token-pricing/work/env/bin/activate
+source env/bin/activate
 
 # Loop through the text file in chunks based on the specified parameters
 for ((job_index=0; job_index<TOTAL_JOBS; job_index++)); do
@@ -40,14 +40,14 @@ for ((job_index=0; job_index<TOTAL_JOBS; job_index++)); do
 #SBATCH --time=40:00:00
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1 
-#SBATCH --partition=h200,h100,a100
+#SBATCH --partition=a100
 #SBATCH --gres gpu:1            # set 1 GPUs per job
 #SBATCH --mem=40G
-#SBATCH -o /NL/token-pricing/work/outputs/slurm_logs/simulation_%j.out
-#SBATCH -e /NL/token-pricing/work/outputs/slurm_logs/simulation_%j.err
+#SBATCH -o outputs/slurm_logs/simulation_%j.out
+#SBATCH -e outputs/slurm_logs/simulation_%j.err
 
-source /NL/token-pricing/work/env/bin/activate
-cd /NL/token-pricing/work/src
+source env/bin/activate
+cd src
 
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
