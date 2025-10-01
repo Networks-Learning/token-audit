@@ -1,4 +1,4 @@
-# Is Your LLM Overcharging You? Tokenization, Transparency, and Incentives
+# Auditing Pay-Per-Token in Large Language Models
 
 This repository contains the code for the paper ["Auditing Pay-Per-Token in Large Language Models"]()
 by Ander Artola Velasco, Stratis Tsirtsis, and Manuel Gomez-Rodriguez.
