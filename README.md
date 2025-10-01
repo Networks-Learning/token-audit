@@ -32,7 +32,7 @@ pip install -r requirements.txt
 ├── figures
     ├──audit_faitful
     ├──audit_heuristic
-    └── audit-random
+    └── audit_random
 
 ├── notebooks
     ├──audit_faitful_random.ipynb
