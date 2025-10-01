@@ -32,14 +32,14 @@ pip install -r requirements.txt
 ├── figures
     ├──audit_faitful
     ├──audit_heuristic
-    └── audit_random
+    └──audit_random
 
 ├── notebooks
     ├──audit_faitful_random.ipynb
     ├──audit_heuristic.ipynb
-    └── process_ds.ipynb
+    └──process_ds.ipynb
 ├── outputs
-    ├──audit_faitful
+    ├──audit_faithful
     └──audit_heuristic
 ├── scripts
     ├──script_slurm_audit_faithful.sh
