@@ -1,12 +1,16 @@
 # Auditing Pay-Per-Token in Large Language Models
-
-This repository contains the code for the paper ["Auditing Pay-Per-Token in Large Language Models"]()
-by Ander Artola Velasco, Stratis Tsirtsis, and Manuel Gomez-Rodriguez.
+This repository contains the code for the paper ["Auditing Pay-Per-Token in Large Language Models"](https://arxiv.org/abs/2505.21627)
+by Ander Artola Velasco, Stratis Tsirtsis, Nastaran Okati and Manuel Gomez-Rodriguez.
 
 
 ## Paper abstract
 
-State-of-the-art large language models require specialized hardware and substantial energy to operate. As a consequence, cloud-based services that provide access to large language models have become very popular. In these services, the price users pay for an output provided by a model depends on the number of tokens the model uses to generate it—they pay a fixed price per token. In this work, we show that this pricing mechanism creates a financial incentive for providers to strategize and misreport the (number of) tokens a model used to generate an output, and users cannot prove, or even know, whether a provider is overcharging them. However, we also show that, if an unfaithful provider is obliged to be transparent about the generative process used by the model, misreporting optimally without raising suspicion is hard. Nevertheless, as a proof-of-concept, we introduce an efficient heuristic algorithm that allows providers to significantly overcharge users without raising suspicion, highlighting the vulnerability of users under the current pay-per-token pricing mechanism. Further, to completely eliminate the financial incentive to strategize, we introduce a simple incentive-compatible token pricing mechanism. Under this mechanism, the price users pay for an output provided by a model depends on the number of characters of the output—they pay a fixed price per character. Along the way, to illustrate and complement our theoretical results, we conduct experiments with several large language models from the ``Llama`` , ``Gemma`` and ``Mistral`` families, and input prompts from the LMSYS Chatbot Arena platform
+Millions of users rely on a market of cloud-based services to obtain access to state-of-the-art large language models.
+However, it has been very recently shown that the de facto \emph{pay-per-token} pricing mechanism used by providers creates a financial incentive for them to strategize and misreport the (number of) tokens a model used to generate an output.
+In this paper, we develop an auditing framework based on martingale theory that enables a trusted third-party auditor who sequentially queries a provider to detect token misreporting.
+Crucially, we show that our framework is guaranteed to \emph{always} detect token misreporting, regardless of the provider's (mis-)reporting policy, % strategy they use and not falsely flag a faithful provider as unfaithful with high probability. To validate our auditing framework, we conduct experiments across a wide range of (mis-)reporting policies using several large language models from the \texttt{Llama}, \texttt{Gemma} and \texttt{Ministral} families, and input prompts from a popular crowdsourced benchmarking platform.
+The results show that our framework detects an unfaithful provider after observing fewer than $\sim$$70$ reported outputs, 
+while satisfying an upper bound $\alpha = 0.05$ on the probability to falsely flag a faithful provider.
 
 ## Dependencies
 
@@ -34,45 +38,40 @@ pip install -r requirements.txt
 ├── data
     └──LMSYS.txt
 ├── figures
-    ├──fixed_string
-    └── heur
+    ├──audit_faitful
+    ├──audit_heuristic
+    └── audit-random
 
 ├── notebooks
+    ├──audit_faitful_random.ipynb
+    ├──audit_heuristic.ipynb
+    └── process_ds.ipynb
 ├── outputs
-    ├──cpt
-    ├──fixed_string
-    └── heuristic
+    ├──audit_faitful
+    └──audit_heuristic
 ├── scripts
-    ├──script_slurm_heur.sh
-│   └──script_slurm_lmsys.sh
+    ├──script_slurm_audit_faithful.sh
+│   └──script_slurm_audit_heur.sh
 └── src
-    ├──heuristic_misreporting.py
-    ├──LMSYS_generation.py
-    ├──tokenizations_fixex_plausible.py
-    ├──tokenizations_fixed.py
-    ├── tokenizations.py
+    ├──audit_faithful.py
+    ├──audit_heuristic.py
     └── utils.py
 ```
 
 - `data` contains the processed set of LMSYS prompts used
 - `figures` contains all the figures presented in the paper.
 - `notebooks` contains python notebooks to generate all the figures included in the paper:
-    - `plots_fixed.ipynb` plots Figure 1.
-    - `plots_heur.ipynb` plots all LMSYS experiment figures.
+    - `audit_faitful_random.ipynb` analyzes the audit data when the provider uses the faithful policy or random policies.
+    - `audit_heuristic.ipynb` analyzes the audit data when the provider uses the heuristic policies.
     - `process_ds.ipynb` builds the LMSYS dataset.
-    - `cpt.ipynb` returns the number of characters per token from LMSYS generations.
-    - `appendix_example.ipynb` generates the examples in Appendix C.2.
 - `outputs`  intermediate output files generated by the experiments' scripts and analyzed in the notebooks. They can be generated using the scripts in the `src` folder.
-    - `cpt` contains answers generated to the LMSYS prompts to estimate the number of character-per-token.
-    - `fixed_string` contains the results of `tokenizations_fixed_plausible.py` used to generated Figure 1. That is, it contains counts of plausible tokenizations for the strings ``language models`` and ``causal inference``.
-    - `heuristic` contains the results of running the heuristic algorithm ``heuristic_misreporting.py``.
+    - `audit_faitful` contains answers generated to the LMSYS prompts to use in the audit for faithful policies and random policies.
+    - `audit_heuristic` contains answers generated to the LMSYS prompts to use in the audit for heuristic policies.
 - `scripts` contains a set of scripts used to run all the experiments presented in the paper. 
 - `src` contains all the code necessary to reproduce the results in the paper. Specifically:
-  - `heuristic_misreporting.py` is the main script used to create all figures (except Figure 1) in the paper. It implements the misreporting heuristic based on token indices, runs it on prompts (taken from the LMSYS dataset) for multiple iterations, determining the plausibility in the last step, and returns the number of plausible longer tokenizations found.
-  - `tokenizations_fixed_plausible.py` is used to create the data for Figure 1 in the paper. It computes all tokenizations of an output string, and computes all top-p/k plausible tokenizations, given a prompt.
-  - `tokenizations_fixed.py` computes all tokenizations of an output string, and determines if the longest is also the most likely, given a prompt.
-  - `tokenizations.py` contains auxiliary functions for tokenization operations, including finding all possible tokenizations of a string, computing the cumulative autoregressive probability of a token sequence, or verifying if a token sequence is top-p/k plausible.
-  - `utils.py` contains auxiliary functions.
+  - `audit_faithful.py` is the script used to generate model answers to the LMSYS Chatbot Arena dataset.
+  - `audit_heuristic.py` is the script used to generate model answers to the LMSYS Chatbot Arena dataset and run the heuristic policies on the outputs.
+
 
 
 ## Instructions
@@ -99,5 +98,9 @@ To reproduce all the figures, run the notebook [plots_heur.ipynb](notebooks/plot
 In case you have questions about the code, you identify potential bugs or you would like us to include additional functionalities, feel free to open an issue or contact [Ander Artola Velasco](mailto:avelasco@mpi-sws.org).
 
 If you use parts of the code in this repository for your own research, please consider citing:
+```
+
+```
+
 
 
