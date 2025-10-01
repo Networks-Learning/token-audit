@@ -14,7 +14,7 @@ while satisfying an upper bound $\alpha = 0.05$ on the probability to falsely fl
 
 ## Dependencies
 
-All the experiments were performed using Python 3.11.2. In order to create a virtual environment and install the project dependencies you can run the following commands:
+All the experiments were performed using Python 3.11.2. In order to create a virtual environment and install the project dependencies, you can run the following commands:
 
 ```bash
 python3 -m venv env
@@ -52,7 +52,7 @@ pip install -r requirements.txt
 
 - `data` contains the processed set of LMSYS prompts used.
 - `figures` contains all the figures presented in the paper.
-- `notebooks` contains python notebooks to analyze the audit data and generate all the figures included in the paper:
+- `notebooks` contains Python notebooks to analyze the audit data and generate all the figures included in the paper:
     - `audit_faitful_random.ipynb` analyzes the audit data when the provider uses the faithful policy or random policies.
     - `audit_heuristic.ipynb` analyzes the audit data when the provider uses the heuristic policies.
     - `process_ds.ipynb` builds the LMSYS dataset.
@@ -73,14 +73,14 @@ pip install -r requirements.txt
 Our experiments use LLMs from the Llama, Gemma and Mistral families, which are "gated" models, that is, they require licensing to use.
 You can request to access it at: [https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct](https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct), [https://huggingface.co/google/gemma-3-4b-it](https://huggingface.co/google/gemma-3-4b-it) and [https://huggingface.co/mistralai/Ministral-8B-Instruct-2410](https://huggingface.co/mistralai/Ministral-8B-Instruct-2410).
 Once you have access, you can download any model in the Llama, Gemma and Mistral families.
-Then, before running the scripts you need to authenticate with your Hugging Face account by running `huggingface-cli` login in the terminal.
+Then, before running the scripts, you need to authenticate with your Hugging Face account by running `huggingface-cli` login in the terminal.
 Each model should be downloaded to the `models/` folder.
 
 
 ### LMSYS experiments
-The script [audit_faithful.py](src/audit_faithful.py) generates the output needed to reproduce all experiments for the faithful and random policies. This is because the values of $E$ for a random policy with $m$ iterations are just the values of $E$ for the faithful policy shifted by $+m$. You can run it in your local python environment or use the Slurm submission script on a cluster, using [script_slurm_audit_faithful.sh](scripts/script_slurm_audit_faithful.sh) with your particular machine specifications. You can use the flags ``--model`` to set a specific model, such as ``"L1B"`` for ``meta-llama/Llama-3.2-1B-Instruct``, the flag ``--temperature`` to set the temperature during generation, ``--prompts`` to use a list of string as prompts (it uses by default the LMSYS prompts in ``data/LMSYS.txt``) and ``--poisson`` to set the Poisson paramter used in the estimator of tokenizations lengths for a string.
+The script [audit_faithful.py](src/audit_faithful.py) generates the output needed to reproduce all experiments for the faithful and random policies. This is because the values of $E$ for a random policy with $m$ iterations are just the values of $E$ for the faithful policy shifted by $+m$. You can run it in your local Python environment or use the Slurm submission script on a cluster, using [script_slurm_audit_faithful.sh](scripts/script_slurm_audit_faithful.sh) with your particular machine specifications. You can use the flags ``--model`` to set a specific model, such as ``"L1B"`` for ``meta-llama/Llama-3.2-1B-Instruct``, the flag ``--temperature`` to set the temperature during generation, ``--prompts`` to use a list of string as prompts (it uses by default the LMSYS prompts in ``data/LMSYS.txt``) and ``--poisson`` to set the Poisson paramter used in the estimator of tokenizations lengths for a string.
 
-The script [audit_heuristic.py](src/audit_heuristic.py) generates the output needed to reproduce all experiments for the heuristic policies. You can run it in your local python environment or use the Slurm submission script on a cluster, using [script_slurm_audit_heur.sh](scripts/script_slurm_audit_heur.sh) with your particular machine specifications. You can use the flags ``--model`` to set a specific model, such as ``"L1B"`` for ``meta-llama/Llama-3.2-1B-Instruct``, the flag ``--temperature`` to set the temperature during generation, ``--prompts`` to use a list of string as prompts (it uses by default the LMSYS prompts in ``data/LMSYS.txt``). ``--p`` for the top-$p$ value used in the heuristic verification step, and ``--poisson`` to set the Poisson paramter used in the estimator of tokenizations lengths for a string.
+The script [audit_heuristic.py](src/audit_heuristic.py) generates the output needed to reproduce all experiments for the heuristic policies. You can run it in your local Python environment or use the Slurm submission script on a cluster, using [script_slurm_audit_heur.sh](scripts/script_slurm_audit_heur.sh) with your particular machine specifications. You can use the flags ``--model`` to set a specific model, such as ``"L1B"`` for ``meta-llama/Llama-3.2-1B-Instruct``, the flag ``--temperature`` to set the temperature during generation, ``--prompts`` to use a list of string as prompts (it uses by default the LMSYS prompts in ``data/LMSYS.txt``). ``--p`` for the top-$p$ value used in the heuristic verification step, and ``--poisson`` to set the Poisson parameter used in the estimator of tokenization lengths for a string.
 
 
 To reproduce all the figures, run the [notebooks](notebooks/).
@@ -88,7 +88,7 @@ To reproduce all the figures, run the [notebooks](notebooks/).
 
 ## Contact & attribution
 
-In case you have questions about the code, you identify potential bugs or you would like us to include additional functionalities, feel free to open an issue or contact [Ander Artola Velasco](mailto:avelasco@mpi-sws.org).
+In case you have questions about the code, you identify potential bugs, or you would like us to include additional functionalities, feel free to open an issue or contact [Ander Artola Velasco](mailto:avelasco@mpi-sws.org).
 
 If you use parts of the code in this repository for your own research, please consider citing:
 ```
