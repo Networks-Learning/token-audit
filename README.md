@@ -1,6 +1,6 @@
 # Auditing Pay-Per-Token in Large Language Models
 This repository contains the code for the paper ["Auditing Pay-Per-Token in Large Language Models"]()
-by Ander Artola Velasco, Stratis Tsirtsis, Nastaran Okati and Manuel Gomez-Rodriguez.
+by Ander Artola Velasco, Stratis Tsirtsis and Manuel Gomez-Rodriguez.
 
 
 ## Paper abstract
