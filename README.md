@@ -6,9 +6,9 @@ by Ander Artola Velasco, Stratis Tsirtsis and Manuel Gomez-Rodriguez.
 ## Paper abstract
 
 Millions of users rely on a market of cloud-based services to obtain access to state-of-the-art large language models.
-However, it has been very recently shown that the de facto \emph{pay-per-token} pricing mechanism used by providers creates a financial incentive for them to strategize and misreport the (number of) tokens a model used to generate an output.
+However, it has been very recently shown that the de facto pay-per-token pricing mechanism used by providers creates a financial incentive for them to strategize and misreport the (number of) tokens a model used to generate an output.
 In this paper, we develop an auditing framework based on martingale theory that enables a trusted third-party auditor who sequentially queries a provider to detect token misreporting.
-Crucially, we show that our framework is guaranteed to \emph{always} detect token misreporting, regardless of the provider's (mis-)reporting policy, % strategy they use and not falsely flag a faithful provider as unfaithful with high probability. To validate our auditing framework, we conduct experiments across a wide range of (mis-)reporting policies using several large language models from the Llama,Gemma and Ministral families, and input prompts from a popular crowdsourced benchmarking platform.
+Crucially, we show that our framework is guaranteed to always detect token misreporting, regardless of the provider's (mis-)reporting policy, % strategy they use and not falsely flag a faithful provider as unfaithful with high probability. To validate our auditing framework, we conduct experiments across a wide range of (mis-)reporting policies using several large language models from the Llama,Gemma and Ministral families, and input prompts from a popular crowdsourced benchmarking platform.
 The results show that our framework detects an unfaithful provider after observing fewer than $\sim$ 70 reported outputs, 
 while satisfying an upper bound $\alpha = 0.05$ on the probability to falsely flag a faithful provider.
 
