@@ -76,13 +76,14 @@ Once you have access, you can download any model in the Llama, Gemma and Mistral
 Then, before running the scripts you need to authenticate with your Hugging Face account by running `huggingface-cli` login in the terminal.
 Each model should be downloaded to the `models/` folder.
 
-### Fixed string experiment
-The script [tokenizations_fixed_plausible.py](src/tokenizations_fixed_plausible.py) generates the output needed to reproduce Figure 1 in the paper. It returns for a given output string (and prompt) the number of top-p/k plausible tokenizations.
-To reproduce the figure, run the notebook [plots_fixed.ipynb](notebooks/plots_fixed.ipynb).
 
-### LMSYS experiment
-The script [heuristic_misreporting.py](src/heuristic_misreporting.py) generates the output needed to reproduce all figures (except Figure 1). You can run it in your local python environment or use the Slurm submission script on a cluster, using [script_slurm_heur.sh](scripts/script_slurm_heur.sh) with your particular machine specifications. Using [script_slurm_heur.sh](scripts/script_slurm_heur.sh) to run the scripts automatically uses the LMSYS prompts in the file [LMSYS.txt](data/LMSYS.txt). You can use the flags ``--model`` to set a specific model, such as ``meta-llama/Llama-3.2-1B-Instruct``, the flag ``--temperature`` to set the temperature, ``--p`` to set top-p parameter, ``--prompts`` to use a list of string as prompts and ``splits`` to select how many iterations of the heuristic should be used.
-To reproduce all the figures, run the notebook [plots_heur.ipynb](notebooks/plots_heur.ipynb).
+### LMSYS experiments
+The script [audit_faithful.py](src/audit_faithful.py) generates the output needed to reproduce all experiments for the faithful and random policies. This is because the values of $E$ for a random policy with $m$ iterations are just the values of $E$ for the faithful policy shifted by $+m$. You can run it in your local python environment or use the Slurm submission script on a cluster, using [script_slurm_audit_faithful.sh](scripts/script_slurm_audit_faithful.sh) with your particular machine specifications. You can use the flags ``--model`` to set a specific model, such as ``"L1B"`` for ``meta-llama/Llama-3.2-1B-Instruct``, the flag ``--temperature`` to set the temperature during generation, ``--prompts`` to use a list of string as prompts (it uses by default the LMSYS prompts in ``data/LMSYS.txt``) and ``--poisson`` to set the Poisson paramter used in the estimator of tokenizations lengths for a string.
+
+The script [audit_heuristic.py](src/audit_heuristic.py) generates the output needed to reproduce all experiments for the heuristic policies. You can run it in your local python environment or use the Slurm submission script on a cluster, using [script_slurm_audit_heur.sh](scripts/script_slurm_audit_heur.sh) with your particular machine specifications. You can use the flags ``--model`` to set a specific model, such as ``"L1B"`` for ``meta-llama/Llama-3.2-1B-Instruct``, the flag ``--temperature`` to set the temperature during generation, ``--prompts`` to use a list of string as prompts (it uses by default the LMSYS prompts in ``data/LMSYS.txt``). ``--p`` for the top-$p$ value used in the heuristic verification step, and ``--poisson`` to set the Poisson paramter used in the estimator of tokenizations lengths for a string.
+
+
+To reproduce all the figures, run the [notebooks](notebooks/).
 
 
 ## Contact & attribution
