@@ -18,8 +18,7 @@ notebooks/plots_heur_new.ipynb
 
 
 outputs/slurm_logs/
-outputs/old_outputs/
-outputs/heuristic_new/old
+
 
 scripts/script_slurm_heur_copy.sh
 scripts/script_slurm_lmsys_copy.sh
