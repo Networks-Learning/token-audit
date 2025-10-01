@@ -34,7 +34,6 @@ src/heuristic_misreporting_original.py
 src/heuristic_top_p_sets_old.py
 
 .DS_Store
-*.pkl
 *.out
 *.err
 
