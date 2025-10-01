@@ -112,11 +112,10 @@ def main (model_name="L1B", model_str="meta-llama/Llama-3.2-1B-Instruct", temper
     print(f"Loaded model {model_name} on device {device}")
 
 
-    #Load the generated strings,
+    #Load the generated strings.
     
     data = []
-    #Gemma [1, 401, 801, 1201, 1601, 2401, 2801, 3201, 3601]
-    #Else [1, 401, 801, 1201, 1601, 2001, 2801, 3201, 3601]
+
     
     if model_name == "G1B":
         idx_list = [1, 401, 801, 1201, 1601, 2401, 2801, 3201, 3601, 3901]
@@ -126,7 +125,7 @@ def main (model_name="L1B", model_str="meta-llama/Llama-3.2-1B-Instruct", temper
 
     for idx in  idx_list:
 
-        with open(f"outputs/audit_faithfull/audit_faithful_{model_name}_temp_{temperature}_poi_6.0_geo_None_id_{idx}.pkl", "rb") as f:
+        with open(f"outputs/audit_faithfull/audit_faithful_{model_name}_temp_{temperature}_poi_7.0_geo_None_id_{idx}.pkl", "rb") as f:
             data_temp = pickle.load(f)
             data= data + data_temp
             

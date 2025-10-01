@@ -8,7 +8,7 @@ import argparse
 from scipy.stats import poisson
 
 
-def constrained_sampling(model, tokenizer, input_ids, reference_text, token_strs, poisson_param=5, geometric_param=None, temperature=1.0, device="cpu", reference_tokens=None):
+def constrained_sampling(model, tokenizer, input_ids, reference_text, token_strs, poisson_param=7, geometric_param=None, temperature=1.0, device="cpu", reference_tokens=None):
     model.eval()
     
     
@@ -100,9 +100,8 @@ def constrained_sampling(model, tokenizer, input_ids, reference_text, token_strs
         def survival_prob(m):
             return 1 - poisson.cdf(m - 1, mu=poisson_param)
 
-    M = min(M, 8)  # cap M
 
-    N_total = 2 * 2 ** M
+    N_total = 2 *  M
     all_samples = []
     while len(all_samples) < N_total:
         s = single_sample()
@@ -151,7 +150,7 @@ def main(prompts, model_name="meta-llama/Llama-3.2-1B-Instruct", temperature=1.0
     model = AutoModelForCausalLM.from_pretrained(
         model_name, 
         torch_dtype=torch.float16 if device.type == "cuda" else torch.float32,
-        cache_dir="work/models"
+        cache_dir="models"
     ).to(device)
 
     print(f"Loaded model {model_name} on device {device}")
@@ -171,7 +170,7 @@ def main(prompts, model_name="meta-llama/Llama-3.2-1B-Instruct", temperature=1.0
     for prompt_index, prompt_str in enumerate(prompts):
         print(f"Prompt number {prompt_index+1}/{len(prompts)}")
         messages = [
-            {"role": "system", "content": "You are a helpful assistant. Answer in English and be extremely concise. Answer very briefly."},
+            {"role": "system", "content": "You are a helpful assistant. Answer briefly and to the point."},
             {"role": "user", "content": prompt_str}
         ]
         prompt = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
@@ -181,15 +180,12 @@ def main(prompts, model_name="meta-llama/Llama-3.2-1B-Instruct", temperature=1.0
             output = model.generate(
                 input_ids=input_ids,
                 do_sample=True,
-                max_new_tokens=60,
                 temperature=temperature,
                 pad_token_id=tokenizer.eos_token_id  # Ensure proper padding
             )
 
         # Filter tokens to only include those within model's vocabulary
-        # reference_tokens = [int(t) for t in output[0][input_ids.size(1):] 
-        #                   if t not in tokenizer.all_special_ids and t < model.config.vocab_size]
-        
+
         reference_tokens = [int(t) for t in output[0][input_ids.size(1):] 
                           if t not in tokenizer.all_special_ids and t < tokenizer.vocab_size]
         
@@ -233,7 +229,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--prompts', nargs="+", type=str, required=False, default=["How are you?", "Tell me a story"])
     parser.add_argument('--temperature', type=float, required=False, default=1.15)
-    parser.add_argument('--poisson', type=float, required=False, default=5)
+    parser.add_argument('--poisson', type=float, required=False, default=7)
     parser.add_argument('--geometric', type=float, required=False, default=None)
     parser.add_argument('--model', type=str, required=False, default="L1B")
     parser.add_argument('--job_id', type=int, required=False, default=0)
