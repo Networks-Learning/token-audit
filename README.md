@@ -50,9 +50,9 @@ pip install -r requirements.txt
     └── utils.py
 ```
 
-- `data` contains the processed set of LMSYS prompts used
+- `data` contains the processed set of LMSYS prompts used.
 - `figures` contains all the figures presented in the paper.
-- `notebooks` contains python notebooks to generate all the figures included in the paper:
+- `notebooks` contains python notebooks to analyze the audit data and generate all the figures included in the paper:
     - `audit_faitful_random.ipynb` analyzes the audit data when the provider uses the faithful policy or random policies.
     - `audit_heuristic.ipynb` analyzes the audit data when the provider uses the heuristic policies.
     - `process_ds.ipynb` builds the LMSYS dataset.
