@@ -71,7 +71,7 @@ pip install -r requirements.txt
 ### Downloading the models
 
 Our experiments use LLMs from the Llama, Gemma and Mistral families, which are "gated" models, that is, they require licensing to use.
-You can request to access it at: [https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct](https://huggingface.co/meta-llama/Llama-3.2-3B-Instruct), [https://huggingface.co/google/gemma-3-4b-it](https://huggingface.co/google/gemma-3-4b-it) and [https://huggingface.co/mistralai/Ministral-8B-Instruct-2410](https://huggingface.co/mistralai/Ministral-8B-Instruct-2410).
+You can request to access it at: [https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct](https://huggingface.co/meta-llama/Llama-3.2-1B-Instruct), [https://huggingface.co/google/gemma-3-1b-it](https://huggingface.co/google/gemma-3-1b-it) and [https://huggingface.co/mistralai/Ministral-8B-Instruct-2410](https://huggingface.co/mistralai/Ministral-8B-Instruct-2410).
 Once you have access, you can download any model in the Llama, Gemma and Mistral families.
 Then, before running the scripts, you need to authenticate with your Hugging Face account by running `huggingface-cli` login in the terminal.
 Each model should be downloaded to the `models/` folder.
