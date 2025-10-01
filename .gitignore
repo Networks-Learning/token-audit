@@ -9,7 +9,7 @@ figures/dp/
 figures/dp
 
 
-models/
+models/*
 
 notebooks/playground*
 notebooks/plots_heu_old.ipynb
